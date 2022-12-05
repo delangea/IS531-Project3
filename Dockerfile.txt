@@ -1,0 +1,17 @@
+FROM node
+MAINTAINER Cole Smith <cole14smith@gmail.com>
+
+# install deps
+ADD package.json /tmp/package.json
+RUN cd /tmp && npm install
+
+# Copy deps
+RUN mkdir -p /opt/professors && cp -a /tmp/node_modules /opt/professors
+
+# Setup workdir
+WORKDIR /opt/professors
+COPY . /opt/professors
+
+# run
+EXPOSE 3000
+CMD ["node", "index.js"]
